@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Integer, Float
 from sqlalchemy.ext.declarative import declarative_base
-from model.db_connection import engine
+from .db_connection import engine
 
 base = declarative_base()
 class Stats(base):
@@ -12,7 +12,9 @@ class Stats(base):
     cpu_uptime = Column(Float)
     cpu_usage = Column(Float)
     memory_usage = Column(Float)
-    # alert_type = Column(String(255))
-    # alert_limit = Column(String(255))
+
+    def __repr__(self):
+        return(f'<ip = {self.ip}, port = {self.port}, username = {self.username}, mail = '
+                + f'{self.mail}, cpu_uptime = {self.cpu_uptime}, cpu_usage, memory_usage = {self.memory_usage}>')
 
 base.metadata.create_all(engine)

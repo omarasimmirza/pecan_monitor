@@ -25,3 +25,12 @@ def insert_to_table(info:Stats):
             print(f"Info for {info.ip} updated.")
     except Exception as e:
         print(e)
+
+def get_all():
+    machine_list = []
+    try:
+        for machines in session.query(Stats).all():
+            machine_list.append(machines)   
+        return machine_list
+    except Exception as e:
+        print(e)
