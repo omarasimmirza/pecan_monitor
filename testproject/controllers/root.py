@@ -2,7 +2,6 @@
 from ..server.model.db_methods import get_all
 from ..server.info_server import set_up
 from pecan import expose
-from webob.exc import status_map
 
 class RootController(object):
 
@@ -13,3 +12,4 @@ class RootController(object):
     @index.when(method='POST', template='json')
     def index_post(self, **data):
         set_up(data)
+        return "done"
