@@ -2,30 +2,6 @@ from .model.db_methods import insert_to_table
 from .model.db_model import Stats
 from .libserver import SystemCheck
 
-# def parse_xml(filename):
-#     try:
-#         list_of_machines = []
-#         tree = et.parse(filename)
-#         root = tree.getroot()
-#         for child in root:
-#             machine = SystemCheck()
-#             machine.ip = child.attrib.get("ip")
-#             machine.port = int(child.attrib.get("port"))
-#             machine.user = child.attrib.get("username")
-#             machine.password = child.attrib.get("password")
-#             machine.mail = child.attrib.get("mail")
-#             if len(child) > 0:
-#                 alert_dict = dict()
-#                 for alert_child in child:
-#                     alert_type = alert_child.attrib.get("type")
-#                     alert_dict[alert_type] = alert_child.attrib.get("limit")
-#                 machine.alert.append(alert_dict)
-#             list_of_machines.append(machine)
-#     except Exception:
-#         print("Error: XML file not found.")
-#     for items in list_of_machines:
-#         print(items.ip)
-#     return list_of_machines
 def set_up(machine_dict):
     try:
         list_of_machines = []

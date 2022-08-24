@@ -1,7 +1,9 @@
 from pysnmp.entity.rfc3413.oneliner import cmdgen
 import time
 from cryptography.fernet import Fernet
+import socket 
 
+ip = socket.gethostbyname(socket.gethostname())
 _oid_hrProcessorLoad_ = '1.3.6.1.2.1.25.3.3.1.2'
 _oid_cpuRawIdleTime_ = '1.3.6.1.4.1.2021.11.53'
 _oid_memTotalReal_ = '1.3.6.1.4.1.2021.4.5'
@@ -25,7 +27,7 @@ class Stats:
         cmdGen = cmdgen.CommandGenerator()
         errorIndication, errorStatus, errorIndex, varBinds = cmdGen.nextCmd(
             cmdgen.CommunityData('public'),
-            cmdgen.UdpTransportTarget(('10.8.128.39', 161)),
+            cmdgen.UdpTransportTarget((ip, 161)),
             oid
         )
         if errorIndication:
@@ -50,7 +52,10 @@ class Stats:
             idle_time1 = float(self.get_data(_oid_cpuRawIdleTime_))
             time.sleep(7)
             idle_time2 = float(self.get_data(_oid_cpuRawIdleTime_))
-            core_load = len(self.get_data(_oid_hrProcessorLoad_))
+            if isinstance(self.get_data(_oid_hrProcessorLoad_), list):
+                core_load = len(self.get_data(_oid_hrProcessorLoad_))
+            else:
+                core_load = 1
             self.cpu_used = 100.0 - ((idle_time2 - idle_time1) / core_load / 5.0)
             self.cpu_used = 0.0 if self.cpu_used < 0.0 else self.cpu_used
         except Exception as e:

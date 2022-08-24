@@ -13,6 +13,9 @@ class SystemCheck:
         self.password = password 
         self.mail = mail
         self.alert = []
+    
+    def __repr__(self):
+        return f'alerts: {self.alert}'
 
     def print_self(self):
         print(self.ip)
@@ -82,10 +85,11 @@ class SystemCheck:
         port = 587  # For starttls
         smtp_server = "smtp.gmail.com"
 
-        message = ""
+        message = "[ALERT]\n\n"
         for alerts in self.alert:
             for key, val in alerts.items():
-                message += f"[ALERT]:\nType: {key}\nLimit: {val}\n\n"
+                message += f'{key}: {val}\n'
+            message+= '\n'
 
         if message != "":
             msg = EmailMessage()
