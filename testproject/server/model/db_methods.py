@@ -34,3 +34,31 @@ def get_all():
         return machine_list
     except Exception as e:
         print(e)
+
+def get_one(ip):
+    return session.query(Stats).filter(Stats.ip == ip).all()
+
+def delete(ip):
+    done = session.query(Stats).filter(Stats.ip == ip).delete()
+    session.commit()
+    if done:
+        return True
+    return False
+
+def update(data, ip):
+    done = session.query(Stats).filter(Stats.ip == ip)\
+        .update(
+            {
+                'port': int(data['port']),
+                'username': data['username'],
+                'mail': data['mail'],
+                # 'cpu_uptime': float(data['cpu_uptime']), 
+                # 'cpu_usage': float(data['cpu_usage']), 
+                # 'memory_usage': float(data['memory_usage'])
+            },
+            synchronize_session='fetch'
+        )
+    session.commit()
+    if done:
+        return True
+    return False
