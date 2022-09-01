@@ -38,6 +38,13 @@ def get_all():
 def get_one(ip):
     return session.query(Stats).filter(Stats.ip == ip).all()
 
+    machine = []
+    try:
+        machine.append(session.query(Stats).filter(Stats.ip == ip).all())
+        return machine
+    except Exception as e:
+        print(e)
+
 def delete(ip):
     done = session.query(Stats).filter(Stats.ip == ip).delete()
     session.commit()
@@ -49,9 +56,9 @@ def update(data, ip):
     done = session.query(Stats).filter(Stats.ip == ip)\
         .update(
             {
-                'port': int(data['port']),
-                'username': data['username'],
-                'mail': data['mail'],
+                # 'port': int(data['port']),
+                # 'username': data['username'],
+                'mail': data['mail']
                 # 'cpu_uptime': float(data['cpu_uptime']), 
                 # 'cpu_usage': float(data['cpu_usage']), 
                 # 'memory_usage': float(data['memory_usage'])

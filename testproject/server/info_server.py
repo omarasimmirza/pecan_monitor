@@ -13,7 +13,7 @@ def set_up(machine_dict):
             machine.user = val['username']
             machine.password = val['password']
             machine.mail = val['mail']
-            if 'alert' in val:
+            if (len(val['alert']) != 0):
                 for index, alert in val['alert'].items():
                     machine.alert.append(alert)
             list_of_machines.append(machine)
@@ -39,4 +39,5 @@ def set_up(machine_dict):
         )
 
         insert_to_table(add_this)
-        checker.email_user()
+        if(len(checker.alert) != 0):
+            checker.email_user()

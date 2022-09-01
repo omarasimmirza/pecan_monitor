@@ -16,7 +16,7 @@ class MachineController(object):
         machine = get_one(self.ip)
         if len(machine) == 0:
             abort(404)
-        return f'ip: {machine[0].ip}, mail: {machine[0].mail}, usage: {machine[0].cpu_usage}, uptime: {machine[0].cpu_uptime}, port: {machine[0].port}, memory: {machine[0].memory_usage}'
+        return machine
 
     @index.when(method='DELETE', template='json')
     def index_DELETE(self):
