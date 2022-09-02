@@ -77,7 +77,7 @@ class SystemCheck:
         client.close()
         return result_list
 
-    def email_user(self):
+    def email_user(self, machine):
         load_dotenv()
         sender_email = str(os.environ.get('email_app_sender'))  # Enter your address
         receiver_email = str(self.mail)  # Enter receiver address
@@ -88,10 +88,20 @@ class SystemCheck:
         message = "[ALERT]\n\n"
         for alerts in self.alert:
             for key, val in alerts.items():
-                message += f'{key}: {val}\n'
-            message+= '\n'
+                if (val == 'cpu'):
+                    alerts['limit'] = float(alerts['limit'][:-1])
+                    print(alerts['limit'])
+                    if (alerts['limit'] < float(machine.cpu_usage)):
+                        message += f'{val} usage is over the limit: {alerts["limit"]}%\nIt is at {machine.cpu_usage[:5]}%\n'
+                elif (val == 'memory'):
+                    print(alerts['limit'])
+                    alerts["limit"] = float(alerts["limit"][:-1])
+                    if (alerts["limit"] < float(machine.memory_usage)):
+                        message += f'{val} usage is over the limit: {alerts["limit"]}%\nIt is at {machine.memory_usage[:5]}%\n'
 
-        if message != "":
+        print(message)
+        if message != "[ALERT]\n\n":
+            print(message)
             msg = EmailMessage()
             msg.set_content(message)
             msg['Subject'] = 'Python Crossover Project'

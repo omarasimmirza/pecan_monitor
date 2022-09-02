@@ -8,3 +8,5 @@ user = '{user in database}'
 password = '{database password}'
 server = '{the server to connect to}'
 database = '{the database name}'
+
+In the upload_file function inside libserver, you will have to specify the path to the client code based on your machine. 

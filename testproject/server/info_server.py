@@ -40,4 +40,4 @@ def set_up(machine_dict):
 
         insert_to_table(add_this)
         if(len(checker.alert) != 0):
-            checker.email_user()
+            checker.email_user(add_this)
